@@ -6,25 +6,25 @@ namespace Quber
     {
         public void Print(Cube cube)
         {
-            var flattened = $"        +-------+\r\n" +
-                            $"        | {cube[-1, -1, 1].ColorZ.Value} {cube[-1, 0, 1].ColorZ.Value} {cube[-1, 1, 1].ColorZ.Value} |\r\n" +
-                            $"        |       |\r\n" +
-                            $"        | {cube[0, -1, 1].ColorZ.Value} {cube[0, 0, 1].ColorZ.Value} {cube[0, 1, 1].ColorZ.Value} |\r\n" +
-                            $"        |       |\r\n" +
-                            $"        | {cube[1, -1, 1].ColorZ.Value} {cube[1, 0, 1].ColorZ.Value} {cube[1, 1, 1].ColorZ.Value} |\r\n" +
-                            $"+-------+-------+-------+-------+\r\n" +
-                            $"| {cube[-1, -1, 1].ColorY.Value} {cube[0, -1, 1].ColorY.Value} {cube[1, -1, 1].ColorY.Value} | {cube[1, -1, 1].ColorX.Value} {cube[1, 0, 1].ColorX.Value} {cube[1, 1, 1].ColorX.Value} | {cube[1, 1, 1].ColorY.Value} {cube[0, 1, 1].ColorY.Value} {cube[-1, 1, 1].ColorY.Value} | {cube[-1, 1, 1].ColorX.Value} {cube[-1, 0, 1].ColorX.Value} {cube[-1, -1, 1].ColorX.Value} |\r\n" +
-                            $"|       |       |       |       |\r\n" +
-                            $"| {cube[-1, -1, 0].ColorY.Value} {cube[0, -1, 0].ColorY.Value} {cube[1, -1, 0].ColorY.Value} | {cube[1, -1, 0].ColorX.Value} {cube[1, 0, 0].ColorX.Value} {cube[1, 1, 0].ColorX.Value} | {cube[1, 1, 0].ColorY.Value} {cube[0, 1, 0].ColorY.Value} {cube[-1, 1, 0].ColorY.Value} | {cube[-1, 1, 0].ColorX.Value} {cube[-1, 0, 0].ColorX.Value} {cube[-1, -1, 0].ColorX.Value} |\r\n" +
-                            $"|       |       |       |       |\r\n" +
-                            $"| {cube[-1, -1, -1].ColorY.Value} {cube[0, -1, -1].ColorY.Value} {cube[1, -1, -1].ColorY.Value} | {cube[1, -1, -1].ColorX.Value} {cube[1, 0, -1].ColorX.Value} {cube[1, 1, -1].ColorX.Value} | {cube[1, 1, -1].ColorY.Value} {cube[0, 1, -1].ColorY.Value} {cube[-1, 1, -1].ColorY.Value} | {cube[-1, 1, -1].ColorX.Value} {cube[-1, 0, -1].ColorX.Value} {cube[-1, -1, -1].ColorX.Value} |\r\n" +
-                            $"+-------+-------+-------+-------+\r\n" +
-                            $"        | {cube[1, -1, -1].ColorZ.Value} {cube[1, 0, -1].ColorZ.Value} {cube[1, 1, -1].ColorZ.Value} |\r\n" +
-                            $"        |       |\r\n" +
-                            $"        | {cube[0, -1, -1].ColorZ.Value} {cube[0, 0, -1].ColorZ.Value} {cube[0, 1, -1].ColorZ.Value} |\r\n" +
-                            $"        |       |\r\n" +
-                            $"        | {cube[-1, -1, -1].ColorZ.Value} {cube[-1, 0, -1].ColorZ.Value} {cube[-1, 1, -1].ColorZ.Value} |\r\n" +
-                            $"        +-------+\r\n";
+            var flattened = $"                +-------+\r\n" +
+                            $"                | {cube[-1, -1, 1].ColorZ.Value} {cube[-1, 0, 1].ColorZ.Value} {cube[-1, 1, 1].ColorZ.Value} |\r\n" +
+                            $"                |       |\r\n" +
+                            $"                | {cube[0, -1, 1].ColorZ.Value} {cube[0, 0, 1].ColorZ.Value} {cube[0, 1, 1].ColorZ.Value} |\r\n" +
+                            $"                |       |\r\n" +
+                            $"                | {cube[1, -1, 1].ColorZ.Value} {cube[1, 0, 1].ColorZ.Value} {cube[1, 1, 1].ColorZ.Value} |\r\n" +
+                            $"        +-------+-------+-------+-------+\r\n" +
+                            $"        | {cube[-1, -1, 1].ColorY.Value} {cube[0, -1, 1].ColorY.Value} {cube[1, -1, 1].ColorY.Value} | {cube[1, -1, 1].ColorX.Value} {cube[1, 0, 1].ColorX.Value} {cube[1, 1, 1].ColorX.Value} | {cube[1, 1, 1].ColorY.Value} {cube[0, 1, 1].ColorY.Value} {cube[-1, 1, 1].ColorY.Value} | {cube[-1, 1, 1].ColorX.Value} {cube[-1, 0, 1].ColorX.Value} {cube[-1, -1, 1].ColorX.Value} |\r\n" +
+                            $"        |       |       |       |       |\r\n" +
+                            $"        | {cube[-1, -1, 0].ColorY.Value} {cube[0, -1, 0].ColorY.Value} {cube[1, -1, 0].ColorY.Value} | {cube[1, -1, 0].ColorX.Value} {cube[1, 0, 0].ColorX.Value} {cube[1, 1, 0].ColorX.Value} | {cube[1, 1, 0].ColorY.Value} {cube[0, 1, 0].ColorY.Value} {cube[-1, 1, 0].ColorY.Value} | {cube[-1, 1, 0].ColorX.Value} {cube[-1, 0, 0].ColorX.Value} {cube[-1, -1, 0].ColorX.Value} |\r\n" +
+                            $"        |       |       |       |       |\r\n" +
+                            $"        | {cube[-1, -1, -1].ColorY.Value} {cube[0, -1, -1].ColorY.Value} {cube[1, -1, -1].ColorY.Value} | {cube[1, -1, -1].ColorX.Value} {cube[1, 0, -1].ColorX.Value} {cube[1, 1, -1].ColorX.Value} | {cube[1, 1, -1].ColorY.Value} {cube[0, 1, -1].ColorY.Value} {cube[-1, 1, -1].ColorY.Value} | {cube[-1, 1, -1].ColorX.Value} {cube[-1, 0, -1].ColorX.Value} {cube[-1, -1, -1].ColorX.Value} |\r\n" +
+                            $"        +-------+-------+-------+-------+\r\n" +
+                            $"                | {cube[1, -1, -1].ColorZ.Value} {cube[1, 0, -1].ColorZ.Value} {cube[1, 1, -1].ColorZ.Value} |\r\n" +
+                            $"                |       |\r\n" +
+                            $"                | {cube[0, -1, -1].ColorZ.Value} {cube[0, 0, -1].ColorZ.Value} {cube[0, 1, -1].ColorZ.Value} |\r\n" +
+                            $"                |       |\r\n" +
+                            $"                | {cube[-1, -1, -1].ColorZ.Value} {cube[-1, 0, -1].ColorZ.Value} {cube[-1, 1, -1].ColorZ.Value} |\r\n" +
+                            $"                +-------+\r\n";
 
             Print(flattened.ToCharArray());
         }
