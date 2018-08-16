@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2018
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quber", "Quber\Quber.csproj", "{B204B666-73C8-4FAA-A7AB-001054C68FCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quber.Tests", "Quber.Tests\Quber.Tests.csproj", "{8C39B421-3E0C-48FB-AF25-69A66435D954}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B204B666-73C8-4FAA-A7AB-001054C68FCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B204B666-73C8-4FAA-A7AB-001054C68FCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B204B666-73C8-4FAA-A7AB-001054C68FCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B204B666-73C8-4FAA-A7AB-001054C68FCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C39B421-3E0C-48FB-AF25-69A66435D954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C39B421-3E0C-48FB-AF25-69A66435D954}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C39B421-3E0C-48FB-AF25-69A66435D954}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C39B421-3E0C-48FB-AF25-69A66435D954}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9A155C7C-29A6-465B-B44D-B9C67A2D56F3}
+	EndGlobalSection
+EndGlobal
