@@ -34,8 +34,7 @@ namespace Quber
 
         public bool Contains(Piece piece)
         {
-            var position = piece.Position;
-            var result = _x * position[0, 0] + _y * position[1, 0] + _z * position[2, 0];
+            var result = _x * piece.X + _y * piece.Y + _z * piece.Z;
             return result > 0;
         }
 

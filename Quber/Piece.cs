@@ -7,18 +7,22 @@ namespace Quber
     public class Piece
     {
         public enum Type { Edge, Corner, Center }
-        public Matrix Position { get; set; }
+
+        public int X => _position[0,0];
+        public int Y => _position[1,0];
+        public int Z => _position[2,0];
 
         public Face ColorX => _lookup[Math.Abs(_colorPosition[0, 0])];
         public Face ColorY => _lookup[Math.Abs(_colorPosition[1, 0])];
         public Face ColorZ => _lookup[Math.Abs(_colorPosition[2, 0])];
 
+        private Matrix _position; 
         private Matrix _colorPosition;
         private IDictionary<int, Face> _lookup;
 
         public Piece(Matrix position, Face colorX, Face colorY, Face colorZ)
         {
-            Position = position;
+            _position = position;
             SetupColors(colorX, colorY, colorZ);
         }
 
@@ -40,13 +44,13 @@ namespace Quber
 
         public void Rotate(Rotation rotation)
         {
-            Position = rotation.Rotate(Position);
+            _position = rotation.Rotate(_position);
             _colorPosition = rotation.Rotate(_colorPosition);
         }
 
         public Type GetType()
         {
-            var sumOfPositions = Math.Abs(Position[0, 0]) + Math.Abs(Position[1, 0]) + Math.Abs(Position[2, 0]);
+            var sumOfPositions = Math.Abs(X) + Math.Abs(Y) + Math.Abs(Z);
             if (sumOfPositions == 3)
                 return Type.Corner;
             if (sumOfPositions == 2)

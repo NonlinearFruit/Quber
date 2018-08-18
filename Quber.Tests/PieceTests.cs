@@ -30,7 +30,7 @@ namespace Quber.Tests
 
             _piece.Rotate(rotation);
 
-            VerifyValuesEqualPosition(new []{1, -1, 1}, _piece.Position);
+            VerifyValuesEqualPosition(new []{1, -1, 1}, _piece);
         }
 
         [Fact]
@@ -54,12 +54,12 @@ namespace Quber.Tests
         }
 
 
-        private void VerifyValuesEqualPosition(int[] values, Matrix position)
+        private void VerifyValuesEqualPosition(int[] values, Piece piece)
         {
-            Assert.NotNull(position);
-            Assert.Equal(values[0], position[0,0]);
-            Assert.Equal(values[1], position[1,0]);
-            Assert.Equal(values[2], position[2,0]);
+            Assert.NotNull(piece);
+            Assert.Equal(values[0], piece.X);
+            Assert.Equal(values[1], piece.Y);
+            Assert.Equal(values[2], piece.Z);
         }
 
     }

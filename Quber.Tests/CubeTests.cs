@@ -1,11 +1,32 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Quber.Tests
 {
     public class CubeTests
-    {
+    {// UDRLFB MES udrlfb XYZ 2F 3F NF 2Fw 3Fw NFw
         private Cube _cube;
+
+        public static IEnumerable<object[]> SectionRotations => new List<object[]>
+        {
+            new object[]{"M", new[] {Face.Front, Face.Up, Face.Back, Face.Down}},
+            new object[]{"E", new[] {Face.Front, Face.Left, Face.Back, Face.Right}},
+            new object[]{"S", new[] {Face.Up, Face.Left, Face.Down, Face.Right}},
+            new object[]{"u", new[] {Face.Front, Face.Right, Face.Back, Face.Left}},
+            new object[]{"d", new[] {Face.Front, Face.Left, Face.Back, Face.Right}},
+            new object[]{"r", new[] {Face.Front, Face.Down, Face.Back, Face.Up}},
+            new object[]{"l", new[] {Face.Front, Face.Up, Face.Back, Face.Down}},
+            new object[]{"f", new[] {Face.Up, Face.Left, Face.Down, Face.Right}},
+            new object[]{"b", new[] {Face.Up, Face.Right, Face.Down, Face.Left}},
+        };
+
+        public static IEnumerable<object[]> CubeRotations => new List<object[]>
+        {
+            new object[]{"X", Face.Front, Face.Down},
+            new object[]{"Y", Face.Left, Face.Front},
+            new object[]{"Z", Face.Up, Face.Right},
+        };
 
         public CubeTests()
         {
@@ -24,7 +45,7 @@ namespace Quber.Tests
         {
             _cube.Rotate(Face.Up, Rotation.Type.Double);
 
-            var pieces = _cube.Pieces.Where(p => p.Position[0, 0] == 1 && p.Position[2, 0] == 1);
+            var pieces = _cube.Pieces.Where(p => p.X == 1 && p.Z == 1);
             Assert.Equal(3, pieces.Count());
             foreach (var piece in pieces)
                 Assert.Equal(Face.Back, piece.ColorX);
@@ -47,7 +68,7 @@ namespace Quber.Tests
 
             Assert.Equal(9, pieces.Count);
             foreach (var piece in pieces)
-                Assert.Equal(1, piece.Position[2,0]);
+                Assert.Equal(1, piece.Z);
         }
 
         [Fact]
@@ -67,12 +88,12 @@ namespace Quber.Tests
                 VerifyFaceHasSoManyOriginalColors(face, 5);
         }
 
-        [Fact]
-        public void RotateString_HandlesNotation()
+        [Theory]
+        [MemberData(nameof(SectionRotations))]
+        public void RotateString_HandlesSingleSectionRotations(string shorthand, Face[] faces)
         {
-            _cube.Rotate("M"); // MES udrlfb XYZ 2F 3F NF
+            _cube.Rotate(shorthand); 
 
-            var faces = new[] {Face.Front, Face.Up, Face.Back, Face.Down};
             for (int i = 0; i < faces.Length; i++)
             {
                 var face = faces[i];
@@ -80,6 +101,16 @@ namespace Quber.Tests
                 VerifyFaceHasSoManyOriginalColors(face, 6);
                 VerifyFaceHasSoManyOfAColor(face, 3, color);
             }
+        }
+
+        [Theory]
+        [MemberData(nameof(CubeRotations))]
+        public void RotateString_HandlesCubeRotations(string shorthand, Face newUp, Face newFront)
+        {
+            _cube.Rotate(shorthand);
+
+            VerifyFaceHasSoManyOfAColor(Face.Up, 9, newUp);
+            VerifyFaceHasSoManyOfAColor(Face.Front, 9, newFront);
         }
 
         private void VerifyFaceHasSoManyOriginalColors(Face face, int count)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 
@@ -95,7 +96,7 @@ namespace Quber
 
         private Piece GetPiece(int x, int y, int z)
         {
-            return Pieces.First(p => p.Position[0, 0] == x && p.Position[1, 0] == y && p.Position[2, 0] == z);
+            return Pieces.First(p => p.X == x && p.Y == y && p.Z == z);
         }
 
 
@@ -124,12 +125,18 @@ namespace Quber
 
         private Face GetFace(string abbreviation)
         {
-            var index = abbreviation.ToUpper().IndexOfAny("UDFBLRMESXYZ".ToCharArray());
-            var letter = abbreviation[index];
+            var letter = GetLetter(abbreviation);
             var face = Face.GetFace(letter.ToString());
             if (face != null)
                 return face;
             return GetWeirdFace(letter);
+        }
+
+        private static char GetLetter(string abbreviation)
+        {
+            var index = abbreviation.ToUpper().IndexOfAny("UDFBLRMESXYZ".ToCharArray());
+            var letter = abbreviation[index];
+            return letter;
         }
 
         private Face GetWeirdFace(char letter)
@@ -141,10 +148,10 @@ namespace Quber
                     face = Face.Right;
                     break;
                 case 'Y':
-                    face = Face.Up;
+                    face = Face.Front;
                     break;
                 case 'Z':
-                    face = Face.Front;
+                    face = Face.Up;
                     break;
                 case 'M':
                     face = Face.Left;
@@ -153,8 +160,10 @@ namespace Quber
                     face = Face.Down;
                     break;
                 case 'S':
-                default:
                     face = Face.Front;
+                    break;
+                default:
+                    face = Face.GetFace(Char.ToUpper(letter).ToString());
                     break;
             }
 
@@ -163,13 +172,36 @@ namespace Quber
 
         private IList<Piece> GetPieces(string abbreviation)
         {
-            var face = GetFace(abbreviation);
+            var face = GetLetter(abbreviation);
             IList<Piece> pieces;
-            switch (face.Value)
+            switch (face)
             {
+                case 'S':
+                    pieces = Pieces.Where(p => p.X == 0).ToList();
+                    break;
+                case 'E':
+                    pieces = Pieces.Where(p => p.Z == 0).ToList();
+                    break;
                 case 'M':
                 default:
-                    pieces = Pieces.Where(p => p.Position[1, 0] == 0).ToList();
+                    pieces = Pieces.Where(p => p.Y == 0).ToList();
+                    break;
+                case 'u':
+                case 'd':
+                    pieces = Pieces.Where(p => p.Z == (size - 1) * Math.Sign(p.Z)).ToList();
+                    break;
+                case 'r':
+                case 'l':
+                    pieces = Pieces.Where(p => p.Y == (size - 1) * Math.Sign(p.Y)).ToList();
+                    break;
+                case 'f':
+                case 'b':
+                    pieces = Pieces.Where(p => p.X == (size - 1) * Math.Sign(p.X)).ToList();
+                    break;
+                case 'X':
+                case 'Y':
+                case 'Z':
+                    pieces = Pieces;
                     break;
             }
 
