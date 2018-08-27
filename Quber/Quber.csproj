@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Cube.cs" />
     <Compile Include="CubePrinter.cs" />
+    <Content Include="deleteme.html" />
     <Compile Include="Face.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="Piece.cs" />

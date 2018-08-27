@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Quber
 {
@@ -14,15 +15,18 @@ namespace Quber
         public IList<Piece> Pieces;
 
         private int size = 3;
+        private int maxLayer;
 
         public Cube()
         {
             Pieces = new List<Piece>();
+            maxLayer = size / 2;
             CreatePieces(Pieces);
         }
 
         private void CreatePieces(IList<Piece> pieces)
         {
+            var count = 0;
             for (int i = -1; i < 2; i++)
                 for (int j = -1; j < 2; j++)
                     for (int k = -1; k < 2; k++)
@@ -86,12 +90,7 @@ namespace Quber
 
         private IList<Piece> GetPieces(Face face)
         {
-            var list = new List<Piece>();
-            foreach (var piece in Pieces)
-                if (face.Contains(piece))
-                    list.Add(piece);
-
-            return list;
+            return Pieces.Where(piece => face.Contains(piece)).ToList();
         }
 
         private Piece GetPiece(int x, int y, int z)
@@ -109,17 +108,10 @@ namespace Quber
         {
             foreach (var abbreviation in shorthand.Split(' '))
             {
-                var face = Face.GetFace(abbreviation);
+                var face = GetFace(abbreviation);
                 var type = Rotation.GetType(abbreviation);
-                if (face != null)
-                    Rotate(face, type);
-                else
-                {
-                    var face2 = GetFace(abbreviation);
-                    var pieces = GetPieces(abbreviation);
-                    Rotate(new Rotation(face2, type), pieces);
-                }
-
+                var pieces = GetPieces(abbreviation);
+                Rotate(new Rotation(face, type), pieces);
             }
         }
 
@@ -137,6 +129,11 @@ namespace Quber
             var index = abbreviation.ToUpper().IndexOfAny("UDFBLRMESXYZ".ToCharArray());
             var letter = abbreviation[index];
             return letter;
+        }
+
+        private static bool IsWideRotation(string abbreviation)
+        {
+            return abbreviation.Contains('w');
         }
 
         private Face GetWeirdFace(char letter)
@@ -173,6 +170,9 @@ namespace Quber
         private IList<Piece> GetPieces(string abbreviation)
         {
             var face = GetLetter(abbreviation);
+            var layer = GetLayer(abbreviation);
+            var isWide = IsWideRotation(abbreviation);
+            Func<int, int, bool> compare = (x, y) => isWide ? x >= y : x == y;
             IList<Piece> pieces;
             switch (face)
             {
@@ -183,29 +183,61 @@ namespace Quber
                     pieces = Pieces.Where(p => p.Z == 0).ToList();
                     break;
                 case 'M':
-                default:
                     pieces = Pieces.Where(p => p.Y == 0).ToList();
                     break;
                 case 'u':
+                    pieces = Pieces.Where(p => p.Z == (maxLayer - layer) * 1).ToList();
+                    break;
                 case 'd':
-                    pieces = Pieces.Where(p => p.Z == (size - 1) * Math.Sign(p.Z)).ToList();
+                    pieces = Pieces.Where(p => p.Z == (maxLayer - layer) * -1).ToList();
                     break;
                 case 'r':
+                    pieces = Pieces.Where(p => p.Y == (maxLayer - layer) * 1).ToList();
+                    break;
                 case 'l':
-                    pieces = Pieces.Where(p => p.Y == (size - 1) * Math.Sign(p.Y)).ToList();
+                    pieces = Pieces.Where(p => p.Y == (maxLayer - layer) * -1).ToList();
                     break;
                 case 'f':
+                    pieces = Pieces.Where(p => p.X == (maxLayer - layer) * 1).ToList();
+                    break;
                 case 'b':
-                    pieces = Pieces.Where(p => p.X == (size - 1) * Math.Sign(p.X)).ToList();
+                    pieces = Pieces.Where(p => p.X == (maxLayer - layer) * -1).ToList();
+                    break;
+                case 'U':
+                    pieces = Pieces.Where(p => compare(p.Z, (maxLayer - layer + 1) * 1)).ToList();
+                    break;
+                case 'D':
+                    pieces = Pieces.Where(p => compare(p.Z, (maxLayer - layer + 1) * -1)).ToList();
+                    break;
+                case 'R':
+                    pieces = Pieces.Where(p => compare(p.Y, (maxLayer - layer + 1) * 1)).ToList();
+                    break;
+                case 'L':
+                    pieces = Pieces.Where(p => compare(p.Y, (maxLayer - layer + 1) * -1)).ToList();
+                    break;
+                case 'F':
+                    pieces = Pieces.Where(p => compare(p.X, (maxLayer - layer + 1) * 1)).ToList();
+                    break;
+                case 'B':
+                    pieces = Pieces.Where(p => compare(p.X, (maxLayer - layer + 1) * -1)).ToList();
                     break;
                 case 'X':
                 case 'Y':
                 case 'Z':
                     pieces = Pieces;
                     break;
+                default:
+                    pieces = this[Face.GetFace(face.ToString())];
+                    break;
             }
 
             return pieces;
+        }
+
+        private int GetLayer(string abbreviation)
+        {
+            var result = Regex.Replace(abbreviation, @"\D+\d*", "");
+            return result == "" ? 1 : int.Parse(result);
         }
 
         public void Rotate(Rotation rotation, IList<Piece> pieces)

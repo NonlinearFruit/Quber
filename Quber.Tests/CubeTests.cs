@@ -21,6 +21,19 @@ namespace Quber.Tests
             new object[]{"b", new[] {Face.Up, Face.Right, Face.Down, Face.Left}},
         };
 
+        public static IEnumerable<object[]> SamplePieces => new List<object[]>
+        {
+            new object[]{"M", new[] {0,0,1}},
+            new object[]{"E", new[] {1,0,0}},
+            new object[]{"S", new[] {0,0,1}},
+            new object[]{"u", new[] {1,0,0}},
+            new object[]{"d", new[] {1,0,0}},
+            new object[]{"r", new[] {1,0,0}},
+            new object[]{"l", new[] {1,0,0}},
+            new object[]{"f", new[] {0,0,1}},
+            new object[]{"b", new[] {0,0,1}},
+        };
+
         public static IEnumerable<object[]> CubeRotations => new List<object[]>
         {
             new object[]{"X", Face.Front, Face.Down},
@@ -104,6 +117,20 @@ namespace Quber.Tests
         }
 
         [Theory]
+        [MemberData(nameof(SamplePieces))]
+        public void RotateString_AffectsProperPiece(string shorthand, int[] pieceValues)
+        {
+            var piece = _cube[pieceValues[0], pieceValues[1], pieceValues[2]];
+            var originalColor = piece.ColorX ?? piece.ColorY ?? piece.ColorZ;
+
+            _cube.Rotate(shorthand);
+
+            var newPiece = _cube[pieceValues[0], pieceValues[1], pieceValues[2]];
+            var newColor = newPiece.ColorX ?? newPiece.ColorY ?? newPiece.ColorZ;
+            Assert.NotEqual(originalColor, newColor);
+        }
+
+        [Theory]
         [MemberData(nameof(CubeRotations))]
         public void RotateString_HandlesCubeRotations(string shorthand, Face newUp, Face newFront)
         {
@@ -111,6 +138,48 @@ namespace Quber.Tests
 
             VerifyFaceHasSoManyOfAColor(Face.Up, 9, newUp);
             VerifyFaceHasSoManyOfAColor(Face.Front, 9, newFront);
+        }
+
+        [Fact]
+        public void RotateString_HandlesBigCubeNotation()
+        {
+            var size = 3;
+            var depth = 1;
+            var face = "F";
+            var layer = size / 2 - depth;
+            var shorthand = $"{depth+1}{face}";
+
+            _cube.Rotate(shorthand);
+
+            var rotatedPieces = _cube[Face.Up].Where(p => p.X == layer).ToList();
+            Assert.Equal(3, rotatedPieces.Count);
+            var unrotatedPieces = _cube[Face.Up].Where(p => p.X != layer).ToList();
+            Assert.Equal(6, unrotatedPieces.Count);
+            foreach (var piece in rotatedPieces)
+                Assert.Equal(Face.Left, piece.ColorZ);
+            foreach (var piece in unrotatedPieces)
+                Assert.Equal(Face.Up, piece.ColorZ);
+        }
+
+        [Fact]
+        public void RotateString_HandlesWideRotations()
+        {
+            var size = 3;
+            var depth = 1;
+            var face = "F";
+            var layer = size / 2 - depth;
+            var shorthand = $"{depth+1}{face}w";
+
+            _cube.Rotate(shorthand);
+
+            var rotatedPieces = _cube[Face.Up].Where(p => p.X >= layer).ToList();
+            Assert.Equal(size*(depth+1), rotatedPieces.Count);
+            var unrotatedPieces = _cube[Face.Up].Where(p => p.X < layer).ToList();
+            Assert.Equal(size*size - size*(depth+1), unrotatedPieces.Count);
+            foreach (var piece in rotatedPieces)
+                Assert.Equal(Face.Left, piece.ColorZ);
+            foreach (var piece in unrotatedPieces)
+                Assert.Equal(Face.Up, piece.ColorZ);
         }
 
         private void VerifyFaceHasSoManyOriginalColors(Face face, int count)
