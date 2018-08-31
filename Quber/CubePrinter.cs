@@ -62,17 +62,17 @@ namespace Quber
             switch (face.Value)
             {
                 case 'F':
-                    return GetFlattenedFace(cube, face, p => p.Z, p => p.Y);
+                    return GetFlattenedFace(cube, face, p => -p.Z, p => p.Y);
                 case 'B':
-                    return GetFlattenedFace(cube, face, p => p.Z, p => -p.Y);
+                    return GetFlattenedFace(cube, face, p => -p.Z, p => p.Y);
                 case 'U':
-                    return GetFlattenedFace(cube, face, p => p.X, p => -p.Y);
+                    return GetFlattenedFace(cube, face, p => p.X, p => p.Y);
                 case 'D':
                     return GetFlattenedFace(cube, face, p => -p.X, p => p.Y);
                 case 'R':
                     return GetFlattenedFace(cube, face, p => -p.Z, p => -p.X);
                 case 'L':
-                    return GetFlattenedFace(cube, face, p => p.Z, p => p.X);
+                    return GetFlattenedFace(cube, face, p => -p.Z, p => p.X);
                 default:
                     return "";
             }
@@ -92,7 +92,7 @@ namespace Quber
         private string flattenFace(IList<string> stickers)
         {
             var size = (int) Math.Sqrt(stickers.Count);
-            var eol = "\r\n";
+            var eol = Environment.NewLine;
             var firstLastLine = $"+{new String('-', size * 2 + 1)}+";
             var spacerLine = $"|{new String(' ', size * 2 + 1)}|";
             var lineStart = "| ";

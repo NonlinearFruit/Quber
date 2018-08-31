@@ -14,9 +14,13 @@ namespace Quber
         public int Size { get; }
         public int MaxLayer { get; }
 
-        public Cube()
+        public Cube() : this(3)
         {
-            Size = 3;
+        }
+
+        public Cube(int size)
+        {
+            Size = size;
             Pieces = new List<Piece>();
             MaxLayer = Size / 2;
             CreatePieces(Pieces);
@@ -24,21 +28,23 @@ namespace Quber
 
         private void CreatePieces(IList<Piece> pieces)
         {
-            var count = 0;
-            for (int i = -1; i < 2; i++)
-                for (int j = -1; j < 2; j++)
-                    for (int k = -1; k < 2; k++)
-                        if (i != 0 || j != 0 || k != 0)
-                            pieces.Add(CreatePiece(i,j,k));
+            for (var i = -MaxLayer; i <= MaxLayer; i++)
+                for (var j = -MaxLayer; j <= MaxLayer; j++)
+                    for (var k = -MaxLayer; k <= MaxLayer; k++)
+                        if (Math.Abs(i) == MaxLayer || Math.Abs(j) == MaxLayer || Math.Abs(k) == MaxLayer)
+                            if (Size%2 == 1 || (i != 0 && j != 0 && k != 0))
+                                pieces.Add(CreatePiece(i,j,k));
                 
         }
 
         private Piece CreatePiece(int i, int j, int k)
         {
-            var position = new Matrix(3,1);
-            position[0, 0] = i;
-            position[1, 0] = j;
-            position[2, 0] = k;
+            var position = new Matrix(3, 1)
+            {
+                [0, 0] = i,
+                [1, 0] = j,
+                [2, 0] = k
+            };
 
             var colorX = GetColorX(i);
             var colorY = GetColorY(j);
@@ -49,6 +55,7 @@ namespace Quber
 
         private Face GetColorZ(int i)
         {
+            i = Math.Sign(i);
             switch (i)
             {
                 case -1:
@@ -62,6 +69,7 @@ namespace Quber
 
         private Face GetColorY(int i)
         {
+            i = Math.Sign(i);
             switch (i)
             {
                 case -1:
@@ -75,6 +83,7 @@ namespace Quber
 
         private Face GetColorX(int i)
         {
+            i = Math.Sign(i);
             switch (i)
             {
                 case -1:

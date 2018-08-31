@@ -182,6 +182,19 @@ namespace Quber.Tests
                 Assert.Equal(Face.Up, piece.ColorZ);
         }
 
+        [Theory]
+        [InlineData(3)]
+        [InlineData(4)]
+        [InlineData(5)]
+        public void Constructor_NxN(int N)
+        {
+            var size = N;
+            _cube = new Cube(size);
+
+            Assert.Equal(6*size*size - 12*size + 8, _cube.Pieces.Count);
+            Assert.Equal(size*size, _cube[Face.Up].Count);
+        }
+
         private void VerifyFaceHasSoManyOriginalColors(Face face, int count)
         {
             VerifyFaceHasSoManyOfAColor(face, count, face);

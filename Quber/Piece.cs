@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace Quber
 {
@@ -24,6 +23,11 @@ namespace Quber
         {
             _position = position;
             SetupColors(colorX, colorY, colorZ);
+        }
+
+        public Piece(int x, int y, int z) : this(new Matrix(3, 1) {[0, 0] = x, [1, 0] = y, [2, 0] = z}, Face.Front,
+            Face.Right, Face.Up)
+        {
         }
 
         private void SetupColors(Face colorX, Face colorY, Face colorZ)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Quber
 {
@@ -34,8 +35,9 @@ namespace Quber
 
         public bool Contains(Piece piece)
         {
+            var maxLayer = Math.Max(Math.Max(Math.Abs(piece.X), Math.Abs(piece.Y)), Math.Abs(piece.Z));
             var result = _x * piece.X + _y * piece.Y + _z * piece.Z;
-            return result > 0;
+            return result > 0 && result == maxLayer;
         }
 
         public Face GetColor(Piece piece)
