@@ -25,6 +25,14 @@ var cube = new Cube();
 cube.Rotate("U2 D2 F2 B2 R2 L2");
 ```
 
+Or even create a NxN cube
+```C#
+var cube = new Cube(5);
+var printer = new CubePrinter();
+
+printer.Print(cube);
+```
+
 ## Screenshots
 
 **Rotate Faces** <br>
@@ -32,6 +40,8 @@ cube.Rotate("U2 D2 F2 B2 R2 L2");
 <br>
 **Checkers** <br>
 ![Checkers][checkers]<br>
+![Checkers 5x5][checkers5x5]<br>
 
 [rotatefaces]: https://github.com/NonlinearFruit/Quber/blob/master/screenshots/RotateFaces.gif
 [checkers]: https://github.com/NonlinearFruit/Quber/blob/master/screenshots/Checkers.gif
+[checkers5x5]: https://github.com/NonlinearFruit/Quber/blob/master/screenshots/Checkers5x5.gif
