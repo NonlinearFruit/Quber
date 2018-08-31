@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -12,15 +10,15 @@ namespace Quber
         public IList<Piece> this[Face face] => GetPieces(face);
         public Piece this[int x, int y, int z] => GetPiece(x, y, z);
 
-        public IList<Piece> Pieces;
-
-        private int size = 3;
-        private int maxLayer;
+        public IList<Piece> Pieces { get; }
+        public int Size { get; }
+        public int MaxLayer { get; }
 
         public Cube()
         {
+            Size = 3;
             Pieces = new List<Piece>();
-            maxLayer = size / 2;
+            MaxLayer = Size / 2;
             CreatePieces(Pieces);
         }
 
@@ -90,7 +88,7 @@ namespace Quber
 
         private IList<Piece> GetPieces(Face face)
         {
-            return Pieces.Where(piece => face.Contains(piece)).ToList();
+            return Pieces.Where(face.Contains).ToList();
         }
 
         private Piece GetPiece(int x, int y, int z)
@@ -186,40 +184,40 @@ namespace Quber
                     pieces = Pieces.Where(p => p.Y == 0).ToList();
                     break;
                 case 'u':
-                    pieces = Pieces.Where(p => p.Z == (maxLayer - layer) * 1).ToList();
+                    pieces = Pieces.Where(p => p.Z == (MaxLayer - layer) * 1).ToList();
                     break;
                 case 'd':
-                    pieces = Pieces.Where(p => p.Z == (maxLayer - layer) * -1).ToList();
+                    pieces = Pieces.Where(p => p.Z == (MaxLayer - layer) * -1).ToList();
                     break;
                 case 'r':
-                    pieces = Pieces.Where(p => p.Y == (maxLayer - layer) * 1).ToList();
+                    pieces = Pieces.Where(p => p.Y == (MaxLayer - layer) * 1).ToList();
                     break;
                 case 'l':
-                    pieces = Pieces.Where(p => p.Y == (maxLayer - layer) * -1).ToList();
+                    pieces = Pieces.Where(p => p.Y == (MaxLayer - layer) * -1).ToList();
                     break;
                 case 'f':
-                    pieces = Pieces.Where(p => p.X == (maxLayer - layer) * 1).ToList();
+                    pieces = Pieces.Where(p => p.X == (MaxLayer - layer) * 1).ToList();
                     break;
                 case 'b':
-                    pieces = Pieces.Where(p => p.X == (maxLayer - layer) * -1).ToList();
+                    pieces = Pieces.Where(p => p.X == (MaxLayer - layer) * -1).ToList();
                     break;
                 case 'U':
-                    pieces = Pieces.Where(p => compare(p.Z, (maxLayer - layer + 1) * 1)).ToList();
+                    pieces = Pieces.Where(p => compare(p.Z, (MaxLayer - layer + 1) * 1)).ToList();
                     break;
                 case 'D':
-                    pieces = Pieces.Where(p => compare(p.Z, (maxLayer - layer + 1) * -1)).ToList();
+                    pieces = Pieces.Where(p => compare(p.Z, (MaxLayer - layer + 1) * -1)).ToList();
                     break;
                 case 'R':
-                    pieces = Pieces.Where(p => compare(p.Y, (maxLayer - layer + 1) * 1)).ToList();
+                    pieces = Pieces.Where(p => compare(p.Y, (MaxLayer - layer + 1) * 1)).ToList();
                     break;
                 case 'L':
-                    pieces = Pieces.Where(p => compare(p.Y, (maxLayer - layer + 1) * -1)).ToList();
+                    pieces = Pieces.Where(p => compare(p.Y, (MaxLayer - layer + 1) * -1)).ToList();
                     break;
                 case 'F':
-                    pieces = Pieces.Where(p => compare(p.X, (maxLayer - layer + 1) * 1)).ToList();
+                    pieces = Pieces.Where(p => compare(p.X, (MaxLayer - layer + 1) * 1)).ToList();
                     break;
                 case 'B':
-                    pieces = Pieces.Where(p => compare(p.X, (maxLayer - layer + 1) * -1)).ToList();
+                    pieces = Pieces.Where(p => compare(p.X, (MaxLayer - layer + 1) * -1)).ToList();
                     break;
                 case 'X':
                 case 'Y':
