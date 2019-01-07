@@ -1,5 +1,5 @@
 # Quber
-Programmatically manipulate and interact with a 3x3 Rubik's cube
+Programmatically manipulate and interact with a Rubik's cube
 
 ## Examples
 
