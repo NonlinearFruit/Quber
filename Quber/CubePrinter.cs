@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Runtime.Remoting;
 
 namespace Quber
 {
@@ -10,7 +8,7 @@ namespace Quber
     {
         public void Print(Cube cube)
         {
-            var blankLine = new String(' ', cube.Size * 2 + 3) + Environment.NewLine;
+            var blankLine = new string(' ', cube.Size * 2 + 3) + Environment.NewLine;
             var blankFace = string.Concat(Enumerable.Repeat(blankLine, cube.Size * 2 + 1));
 
             var layerTop = Concat(blankFace, blankFace, GetFlattenedFace(cube, Face.Up));
@@ -24,7 +22,7 @@ namespace Quber
         private string Concat(params string[] items)
         {
             var result = items[0];
-            for (int i = 1; i < items.Length; i++)
+            for (var i = 1; i < items.Length; i++)
                 result = Concat(result, items[i]);
             return result;
         }
@@ -34,7 +32,7 @@ namespace Quber
             var leftLines = left.Split(new[] { Environment.NewLine }, StringSplitOptions.None); ;
             var rightLines = right.Split(new[] { Environment.NewLine }, StringSplitOptions.None); ;
             var result = "";
-            for (int i = 0; i < leftLines.Length - 1; i++)
+            for (var i = 0; i < leftLines.Length - 1; i++)
             {
                 result += leftLines[i].Substring(0, leftLines[i].Length-1) + rightLines[i] + Environment.NewLine;
             }
@@ -44,7 +42,7 @@ namespace Quber
         private string Stack(params string[] items)
         {
             var result = items[0];
-            for (int i = 1; i < items.Length; i++)
+            for (var i = 1; i < items.Length; i++)
                 result = Stack(result, items[i]);
             return result;
         }
@@ -59,28 +57,21 @@ namespace Quber
 
         private string GetFlattenedFace(Cube cube, Face face)
         {
-            switch (face.Value)
+            return face.Value switch
             {
-                case 'F':
-                    return GetFlattenedFace(cube, face, p => -p.Z, p => p.Y);
-                case 'B':
-                    return GetFlattenedFace(cube, face, p => -p.Z, p => p.Y);
-                case 'U':
-                    return GetFlattenedFace(cube, face, p => p.X, p => p.Y);
-                case 'D':
-                    return GetFlattenedFace(cube, face, p => -p.X, p => p.Y);
-                case 'R':
-                    return GetFlattenedFace(cube, face, p => -p.Z, p => -p.X);
-                case 'L':
-                    return GetFlattenedFace(cube, face, p => -p.Z, p => p.X);
-                default:
-                    return "";
-            }
+                'F' => GetFlattenedFace(cube, face, p => -p.Z, p => p.Y),
+                'B' => GetFlattenedFace(cube, face, p => -p.Z, p => p.Y),
+                'U' => GetFlattenedFace(cube, face, p => p.X, p => p.Y),
+                'D' => GetFlattenedFace(cube, face, p => -p.X, p => p.Y),
+                'R' => GetFlattenedFace(cube, face, p => -p.Z, p => -p.X),
+                'L' => GetFlattenedFace(cube, face, p => -p.Z, p => p.X),
+                _ => ""
+            };
         }
 
         private string GetFlattenedFace(Cube cube, Face face, Func<Piece, int> firstOrder, Func<Piece, int> secondOrder)
         {
-            return flattenFace(
+            return FlattenFace(
                 cube[face]
                 .OrderBy(firstOrder)
                 .ThenBy(secondOrder)
@@ -89,7 +80,7 @@ namespace Quber
             );
         }
 
-        private string flattenFace(IList<string> stickers)
+        private string FlattenFace(IList<string> stickers)
         {
             var size = (int) Math.Sqrt(stickers.Count);
             var eol = Environment.NewLine;
@@ -100,10 +91,10 @@ namespace Quber
             var spacer = " ";
 
             var flattened = $"{firstLastLine}{eol}";
-            for (int i = 0; i < size; i++)
+            for (var i = 0; i < size; i++)
             {
                 var line = lineStart;
-                for (int j = 0; j < size; j++)
+                for (var j = 0; j < size; j++)
                 {
                     line += $"{stickers[i * size + j]}{spacer}";
                 }
@@ -117,11 +108,11 @@ namespace Quber
             return flattened;
         }
 
-        private void Print(char[] cube)
+        private void Print(IEnumerable<char> cube)
         {
             foreach (var piece in cube)
             {
-                if (Char.IsLetter(piece))
+                if (char.IsLetter(piece))
                     SetColor(piece);
                 Console.Write(piece);
                 Console.ResetColor();
@@ -130,27 +121,16 @@ namespace Quber
 
         private void SetColor(char piece)
         {
-            switch (piece)
+            Console.BackgroundColor = piece switch
             {
-                case 'F':
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    break;
-                case 'B':
-                    Console.BackgroundColor = ConsoleColor.DarkGray;
-                    break;
-                case 'U':
-                    Console.BackgroundColor = ConsoleColor.White;
-                    break;
-                case 'D':
-                    Console.BackgroundColor = ConsoleColor.DarkYellow;
-                    break;
-                case 'L':
-                    Console.BackgroundColor = ConsoleColor.Green;
-                    break;
-                case 'R':
-                    Console.BackgroundColor = ConsoleColor.Blue;
-                    break;
-            }
+                'F' => ConsoleColor.Red,
+                'B' => ConsoleColor.DarkGray,
+                'U' => ConsoleColor.White,
+                'D' => ConsoleColor.DarkYellow,
+                'L' => ConsoleColor.Green,
+                'R' => ConsoleColor.Blue,
+                _ => Console.BackgroundColor
+            };
         }
     }
 }

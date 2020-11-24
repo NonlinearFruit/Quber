@@ -15,7 +15,7 @@ namespace Quber
         public Face ColorY => _lookup[Math.Abs(_colorPosition[1, 0])];
         public Face ColorZ => _lookup[Math.Abs(_colorPosition[2, 0])];
 
-        private Matrix _position; 
+        private Matrix _position;
         private Matrix _colorPosition;
         private IDictionary<int, Face> _lookup;
 
@@ -52,14 +52,15 @@ namespace Quber
             _colorPosition = rotation.Rotate(_colorPosition);
         }
 
-        public Type GetType()
+        public new Type GetType()
         {
             var sumOfPositions = Math.Abs(X) + Math.Abs(Y) + Math.Abs(Z);
-            if (sumOfPositions == 3)
-                return Type.Corner;
-            if (sumOfPositions == 2)
-                return Type.Edge;
-            return Type.Center;
+            return sumOfPositions switch
+            {
+                3 => Type.Corner,
+                2 => Type.Edge,
+                _ => Type.Center
+            };
         }
     }
 }

@@ -12,10 +12,12 @@ namespace Quber.Tests
 
         public PieceTests()
         {
-            _position = new Matrix(3,1);
-            _position[0, 0] = 1;
-            _position[1, 0] = 1;
-            _position[2, 0] = 1;
+            _position = new Matrix(3, 1)
+            {
+                [0, 0] = 1,
+                [1, 0] = 1,
+                [2, 0] = 1
+            };
             _colorX = Face.Up;
             _colorY = Face.Right;
             _colorZ = Face.Front;

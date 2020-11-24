@@ -53,7 +53,7 @@ namespace Quber
         {
             var size = 3;
             int cos = 0, sin = 0, skip = 0;
-            
+
             switch(type)
             {
                 case Type.Widdershins:
@@ -82,9 +82,9 @@ namespace Quber
 
             var values = new Stack<int>(new[] {cos, sin, -sin, cos});
             var matrix = new Matrix(size, size);
-            for (int row = 0; row < size; row++)
+            for (var row = 0; row < size; row++)
             {
-                for (int column = 0; column < size; column++)
+                for (var column = 0; column < size; column++)
                 {
                     int value;
                     if (row == skip && column == skip)

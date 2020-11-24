@@ -54,7 +54,7 @@ namespace Quber.Tests
         [MemberData(nameof(ClockwiseRotationSequences))]
         public void ClockwiseRotations_RotateClockwise(Rotation rotation, int[][] valuesList)
         {
-            for (int i = 0; i < valuesList.Length; i++)
+            for (var i = 0; i < valuesList.Length; i++)
             {
                 var values = valuesList[i];
                 var nextValues = valuesList[(i + 1) % valuesList.Length];
@@ -70,7 +70,7 @@ namespace Quber.Tests
         [MemberData(nameof(WiddershinsRotationSequences))]
         public void WiddershinsRotations_RotateWiddershins(Rotation rotation, int[][] valuesList)
         {
-            for (int i = 0; i < valuesList.Length; i++)
+            for (var i = 0; i < valuesList.Length; i++)
             {
                 var values = valuesList[i];
                 var nextValues = valuesList[(valuesList.Length + i - 1) % valuesList.Length];
@@ -86,7 +86,7 @@ namespace Quber.Tests
         [MemberData(nameof(DoubleRotationSequences))]
         public void DoubleRotations_RotatesTwice(Rotation rotation, int[][] valuesList)
         {
-            for (int i = 0; i < valuesList.Length; i++)
+            for (var i = 0; i < valuesList.Length; i++)
             {
                 var values = valuesList[i];
                 var nextValues = valuesList[(i + 2) % valuesList.Length];
@@ -119,10 +119,12 @@ namespace Quber.Tests
 
         private Matrix GetPosition(int[] values)
         {
-            var position = new Matrix(3, 1);
-            position[0, 0] = values[0];
-            position[1, 0] = values[1];
-            position[2, 0] = values[2];
+            var position = new Matrix(3, 1)
+            {
+                [0, 0] = values[0],
+                [1, 0] = values[1],
+                [2, 0] = values[2]
+            };
             return position;
         }
     }

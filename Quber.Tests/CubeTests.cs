@@ -105,9 +105,9 @@ namespace Quber.Tests
         [MemberData(nameof(SectionRotations))]
         public void RotateString_HandlesSingleSectionRotations(string shorthand, Face[] faces)
         {
-            _cube.Rotate(shorthand); 
+            _cube.Rotate(shorthand);
 
-            for (int i = 0; i < faces.Length; i++)
+            for (var i = 0; i < faces.Length; i++)
             {
                 var face = faces[i];
                 var color = faces[(i + 1) % faces.Length];
@@ -202,11 +202,7 @@ namespace Quber.Tests
         private void VerifyFaceHasSoManyOfAColor(Face face, int count, Face color)
         {
             var pieces = _cube[face];
-            var found = 0;
-            foreach (var piece in pieces)
-                if (face.GetColor(piece) == color)
-                    found++;
-         
+            var found = pieces.Count(piece => face.GetColor(piece) == color);
             Assert.Equal(count, found);
         }
     }

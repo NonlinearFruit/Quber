@@ -36,8 +36,8 @@ namespace Quber
         public static Matrix operator *(Matrix a, int scalar)
         {
             var c = new Matrix(a.Rows, a.Columns);
-            for (int i = 0; i < c.Rows; i++)
-            for (int j = 0; j < c.Columns; j++)
+            for (var i = 0; i < c.Rows; i++)
+            for (var j = 0; j < c.Columns; j++)
                 c[i, j] = a[i, j] * scalar;
 
             return c;
@@ -49,9 +49,9 @@ namespace Quber
                 throw new ArgumentException("Columns of matrix A must equal Rows of matrix B");
 
             var c = new Matrix(a.Rows, b.Columns);
-            for (int i = 0; i < c.Rows; i++)
-            for (int j = 0; j < c.Columns; j++)
-            for (int k = 0; k < a.Columns; k++) 
+            for (var i = 0; i < c.Rows; i++)
+            for (var j = 0; j < c.Columns; j++)
+            for (var k = 0; k < a.Columns; k++)
                 c[i, j] = c[i, j] + a[i, k] * b[k, j];
 
             return c;

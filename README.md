@@ -1,4 +1,8 @@
 # Quber
+[![build](https://img.shields.io/github/workflow/status/NonlinearFruit/Quber/dotnet-core)](https://github.com/NonlinearFruit/Quber/actions?query=workflow%3Adotnet-core)
+[![coverage](https://img.shields.io/codecov/c/gh/NonlinearFruit/Quber.svg)](https://codecov.io/gh/NonlinearFruit/Quber)
+[![maintainability](https://api.codeclimate.com/v1/badges/74c2c9f1864e1ec37987/maintainability)](https://codeclimate.com/github/NonlinearFruit/Quber/maintainability)
+
 Programmatically manipulate and interact with a Rubik's cube
 
 ## Examples
