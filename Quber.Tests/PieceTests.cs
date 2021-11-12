@@ -22,7 +22,6 @@ namespace Quber.Tests
             _colorY = Face.Right;
             _colorZ = Face.Front;
             _piece = new Piece(_position, _colorX, _colorY, _colorZ);
-
         }
 
         [Fact]
@@ -47,12 +46,23 @@ namespace Quber.Tests
             Assert.Equal(_colorZ, _piece.ColorZ);
         }
 
-        [Fact]
-        public void GetType_GetsType()
+        [Theory]
+        [InlineData(1, 1, 1, Piece.Type.Corner)]
+        [InlineData(1, 0, 0, Piece.Type.Center)]
+        [InlineData(1, 1, 0, Piece.Type.Edge)]
+        public void GetType_GetsType(int x, int y, int z, Piece.Type expectedType)
         {
-            var type = _piece.GetType();
+            var position = new Matrix(3, 1)
+            {
+                [0, 0] = x,
+                [1, 0] = y,
+                [2, 0] = z
+            };
+            var piece = new Piece(position, Face.Up, Face.Right, Face.Front);
 
-            Assert.Equal(Piece.Type.Corner, type);
+            var actualType = piece.GetType();
+
+            Assert.Equal(expectedType, actualType);
         }
 
 
