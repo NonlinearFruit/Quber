@@ -2,9 +2,8 @@
   <img width="500" height="500" src="screenshots/quber_logo.png">
   <br>
   <br>
-  <a href="https://github.com/NonlinearFruit/Quber/actions?query=workflow%3Adotnet-core"><img alt="build" src="https://img.shields.io/github/workflow/status/NonlinearFruit/Quber/dotnet-core"/></a>
+  <a href="https://github.com/NonlinearFruit/Quber/actions?query=workflow%3Adotnet-core"><img alt="build" src="https://img.shields.io/github/actions/workflow/status/NonlinearFruit/Quber/dotnet-core.yml?branch=master"/></a>
   <a href="https://codecov.io/gh/NonlinearFruit/Quber"><img alt="coverage" src="https://img.shields.io/codecov/c/gh/NonlinearFruit/Quber.svg"/></a>
-  <a href="https://codeclimate.com/github/NonlinearFruit/Quber/maintainability"><img alt="maintainability" src="https://api.codeclimate.com/v1/badges/74c2c9f1864e1ec37987/maintainability"/></a>
 </p>
 
 <h1 style="text-align:center">Quber</h1>
