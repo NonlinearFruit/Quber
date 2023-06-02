@@ -110,6 +110,7 @@ namespace Quber
 
         private void Print(IEnumerable<char> cube)
         {
+            Console.Clear();
             foreach (var piece in cube)
             {
                 if (char.IsLetter(piece))

@@ -15,6 +15,7 @@ namespace Quber
             {
                 printer.Print(cube);
                 var rotations = Console.ReadLine();
+                if (rotations?.ToLower() == "exit") return;
                 cube.Rotate(rotations);
             }
         }
